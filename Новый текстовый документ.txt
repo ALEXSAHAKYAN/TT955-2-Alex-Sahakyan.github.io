@@ -1,0 +1,92 @@
+define CDP_FRAME_SIZE 1700
+u_char cdpframe[CDP_FRAME_SIZE];
+#if 0
+unsigned char   ClientMACaddr;
+int             ClientMACaddr_ind =     0;
+#endif
+void print_app_vlan_usage(void);
+                	/* Re-read the MAC */
+                	mc_mac_free (mac_faked);
+                	mac_faked = mc_net_info_get_mac(neti);
+
+                	/* Print it */
+                	print_mac ("Faked MAC:   ", mac_faked);
+
+                	/* Is the same MAC? */
+                	if (mc_mac_equal (mac, mac_faked)) {
+                	        printf ("It's the same MAC Address.\n");
+			}
+		
+		}
+
+	        /* Memory free */
+		mc_mac_free (mac);
+		mc_mac_free (mac_faked);
+		mc_net_info_free (neti);
+		if ((cdpmodeyes==0)&&(vhop_yes==0)&&(avaya_yes==0)&&(alcatel_yes==0)){
+			exit(1);
+		}
+	}
+	        if ((assessment_mode==0)&&(cdpmodeyes==0)&&(vhop_yes==0)&&(nortel_yes==0)&&(lldpspoof_yes==0)&&(avaya_yes==0)&&(alcatel_yes==0)){
+        	}
+		/* Add the VVID Interface */
+		create_vlan_interface(IfName_temp,vvid);
+		printf("Added VLAN %u to Interface %s\n",vvid, IfName_temp);
+
+	        /* Check to see if we need to change the MAC Address */
+	        if (macy == 1) {
+			printf("Changing MAC address for new interface\n");
+	                srandom(time(NULL));
+
+	                /* Read the MAC */
+	                if ((neti = mc_net_info_new(vinterface)) == NULL) exit(1);
+	                mac = mc_net_info_get_mac(neti);
+
+	                /* Print the current MAC info */
+	                print_mac_new_interface ("Current MAC: ", mac);
+
+	                /* Change the MAC */
+	                mac_faked = mc_mac_dup (mac);
+
+	                if (show) {
+	                        exit (0);
+	                } else if (set_mac) {
+	                        if (mc_mac_read_string (mac_faked, set_mac) < 0) exit(1);
+	                } else if (random) {
+	                        mc_mac_random (mac_faked, 6);
+	                } else if (endding) {
+	                        mc_mac_random (mac_faked, 3);
+	                } else {
+	                        mc_mac_next (mac_faked);
+	                }
+
+	                /* Set the new MAC */
+	                if (mc_net_info_set_mac (neti, mac_faked) >= 0) {
+	                        /* Re-read the MAC */
+	                        mc_mac_free (mac_faked);
+	                        mac_faked = mc_net_info_get_mac(neti);
+
+	                        /* Print it */
+	                        print_mac_new_interface ("Faked MAC:   ", mac_faked);
+
+	                        /* Is the same MAC? */
+	                        if (mc_mac_equal (mac, mac_faked)) {
+	                                printf ("It's the same MAC Address!!\n");
+	                        }
+
+	                }
+
+	                /* Memory free */
+	                mc_mac_free (mac);
+	                mc_mac_free (mac_faked);
+	                mc_net_info_free (neti);
+
+	        }
+
+		// Calling dhcp client for new voice interface 
+		int return_value = dhcpclientcall(vinterface);
+
+	}
+
+return 0;
+}
